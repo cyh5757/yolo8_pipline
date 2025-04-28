@@ -1,0 +1,5 @@
+# config.yaml
+epochs: 10
+batch_size: 16
+learning_rate: 0.001
+imgsz: 640
