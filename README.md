@@ -106,3 +106,22 @@ curl -X POST "http://localhost:8000/predict/" -F "file=@your_image.jpg"
 
 
 ---
+## 🚧 향후 개선 예정
+
+현재는 FastAPI 서버가 직접 YOLOv8 모델을 호출하는 구조이지만,  
+추후에는 **모델 서버와 백엔드 서버를 완전히 분리**하여 아키텍처를 개선할 예정입니다.
+
+- 모델 서버 (예: Triton Inference Server, TorchServe 또는 FastAPI 기반 YOLO 서버)
+  - YOLO 모델 추론 전용
+- FastAPI 서버
+  - 사용자의 요청을 받아 모델 서버에 Inference 요청
+
+이를 통해 다음과 같은 효과를 기대합니다:
+- **확장성 향상**: 여러 FastAPI 서버가 하나의 모델 서버를 공유
+- **유지보수 용이성**: 모델 업데이트 시 백엔드 서버 수정 불필요
+- **유연한 배포**: 모델 서버와 백엔드 서버를 독립적으로 배포 및 스케일링 가능
+
+개선된 구조에서는 Docker Compose를 활용하여  
+`model_server`와 `fastapi_server` 두 개의 서비스를 독립적으로 관리할 예정입니다.
+
+---
